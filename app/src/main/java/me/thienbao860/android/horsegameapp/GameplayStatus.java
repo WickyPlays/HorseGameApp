@@ -4,4 +4,5 @@ public enum GameplayStatus {
     NOT_STARTED,
     WAITING,
     PLAYING,
+    FINISHED
 }

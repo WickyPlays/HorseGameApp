@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -42,13 +43,21 @@ public class TrackAdapter extends BaseAdapter {
         return i;
     }
 
-    @SuppressLint("ViewHolder")
+    @SuppressLint({"ViewHolder", "ClickableViewAccessibility"})
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         view = inflater.inflate(layout, null);
 
         SeekBar sb = view.findViewById(R.id.sbTrack);
+
+        //Prevent user control
+        sb.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return true;
+            }
+        });
 
         Horse horse = getItem(i);
         if (horse != null) {
@@ -62,6 +71,10 @@ public class TrackAdapter extends BaseAdapter {
             cb.setButtonTintList(csl);
 
             cb.setOnCheckedChangeListener((cbView, checked) -> {
+                if (Gameplay.getInstance().getStatus() != GameplayStatus.NOT_STARTED) {
+                    cbView.setChecked(horse.isBet());
+                    return;
+                }
                 horse.setBet(checked);
             });
 

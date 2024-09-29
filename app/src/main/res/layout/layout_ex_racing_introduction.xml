@@ -4,19 +4,22 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
     android:background="#AEFFFFFF"
+    android:padding="16dp"
+    android:paddingHorizontal="25dp"
     tools:context=".activities.ActivityIntroduction">
 
 
     <TextView
-        android:id="@+id/txtIntroduction"
+        android:id="@+id/txtGameTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:text="Welcome to the app! This app helps you experience an exciting racing game. Please log in to start playing!"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:text="Horse Racing Game"
         android:textColor="@android:color/black"
-        android:textSize="18sp"
+        android:textSize="24sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -24,53 +27,91 @@
 
     <TextView
         android:id="@+id/txtIntroduction2"
-        android:layout_width="380dp"
-        android:layout_height="54dp"
-        android:layout_marginTop="16dp"
-        android:text="Step 1: choose your horse by selecting the checkbox."
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:gravity="center"
+        android:text="Horse racing is probably one of the favorite sports of bettors and that is why we have brought you this beginner’s guide to horse racing betting. Horse racing has long been associated with gambling and you only need to look at the betting activity surrounding major horse racing events around the world to understand the importance of horse racing betting."
         android:textColor="@android:color/black"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtIntroduction" />
+        app:layout_constraintTop_toBottomOf="@+id/txtGameTitle" />
 
     <TextView
-        android:id="@+id/txtIntroduction3"
-        android:layout_width="380dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="25dp"
-        android:text="Step 2: Click the 'Start' button and wait for the results."
+        android:id="@+id/txtIntroduction"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:gravity="center"
+        android:text="Welcome to the ultimate horse racing experience! Follow the instructions below to start racing and win prizes."
         android:textColor="@android:color/black"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imgHorseRace" />
+
+    <ImageView
+        android:id="@+id/imgHorseRace"
+        android:layout_width="327dp"
+        android:layout_height="151dp"
+        android:layout_marginTop="28dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/header"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtIntroduction2" />
 
     <TextView
-        android:id="@+id/txtIntroduction4"
-        android:layout_width="380dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="16dp"
-        android:text="Step 3: select the reset button to start over."
+        android:id="@+id/txtStep1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="88dp"
+        android:text="Step 1: Choose your horse by selecting the checkbox below."
         android:textColor="@android:color/black"
-        android:textSize="18sp"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtIntroduction3" />
+        app:layout_constraintTop_toBottomOf="@+id/imgHorseRace" />
+
+    <TextView
+        android:id="@+id/txtStep2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Step 2: Press the 'Start' button to begin the race and wait for the results."
+        android:textColor="@android:color/black"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtStep1" />
+
+    <TextView
+        android:id="@+id/txtStep3"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Step 3: If you wish to start over, simply hit the 'Reset' button."
+        android:textColor="@android:color/black"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtStep2" />
 
     <Button
         android:id="@+id/btnBackToLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="348dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="120dp"
         android:backgroundTint="@color/black"
         android:text="Back to Login"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:textColor="@android:color/white"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtIntroduction4"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/txtStep3" />
 </androidx.constraintlayout.widget.ConstraintLayout>

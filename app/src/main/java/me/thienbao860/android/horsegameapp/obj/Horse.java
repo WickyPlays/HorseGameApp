@@ -4,6 +4,7 @@ import me.thienbao860.android.horsegameapp.Utils;
 
 public class Horse {
 
+    private int rank;
     private String color;
     private String name;
     private float progress;
@@ -16,6 +17,7 @@ public class Horse {
         this.speed = 0;
         this.isBet = false;
         this.color = Utils.randomHexColor();
+        this.rank = 0;
     }
     
     public void generateRandomSpeed() {
@@ -68,6 +70,14 @@ public class Horse {
 
     public void setColor(String color) {
         this.color = color;
+    }
+
+    public int getRank() {
+        return rank;
+    }
+
+    public void setRank(int rank) {
+        this.rank = rank;
     }
 
     public boolean isWon() {
