@@ -2,9 +2,9 @@ package me.thienbao860.android.horsegameapp.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,15 +12,15 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import me.thienbao860.android.horsegameapp.Gameplay;
 import me.thienbao860.android.horsegameapp.R;
+import me.thienbao860.android.horsegameapp.UserManager;
+import me.thienbao860.android.horsegameapp.obj.User;
 
 public class ActivityLogin extends AppCompatActivity {
 
     private EditText txtUserName;
     private EditText txtPassword;
-
-    private final String FIXED_ACCOUNT_NAME = "admin";
-    private final String FIXED_ACCOUNT_PASSWORD = "1234";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,30 +36,31 @@ public class ActivityLogin extends AppCompatActivity {
         txtUserName = findViewById(R.id.txtUserName);
         txtPassword = findViewById(R.id.txtPassword);
         Button btnLogin = findViewById(R.id.btnLogin);
-
-        // Clear hints on focus
-        txtUserName.setOnFocusChangeListener((v, hasFocus) -> {
-            if (hasFocus) {
-                txtUserName.setHint("");
-            }
-        });
-        txtPassword.setOnFocusChangeListener((v, hasFocus) -> {
-            if (hasFocus) {
-                txtPassword.setHint("");
-            }
-        });
+        TextView tvError = findViewById(R.id.tvError);
+        EditText etHorseName = findViewById(R.id.etHorseName);
 
         btnLogin.setOnClickListener((e) -> {
             String enteredUsername = txtUserName.getText().toString();
             String enteredPassword = txtPassword.getText().toString();
 
-            if (enteredUsername.equals(FIXED_ACCOUNT_NAME) && enteredPassword.equals(FIXED_ACCOUNT_PASSWORD)) {
-                Intent intent = new Intent(this, ActivityGameplay.class);
-                startActivity(intent);
-                finish();
-            } else {
+            User user = UserManager.login(enteredUsername, enteredPassword);
+            if (user == null) {
                 Toast.makeText(ActivityLogin.this, "Invalid username or password", Toast.LENGTH_SHORT).show();
+                tvError.setText("Invalid username or password");
+                return;
             }
+
+            if (etHorseName.getText().toString().isEmpty()) {
+                Toast.makeText(ActivityLogin.this, "Please enter horse name", Toast.LENGTH_SHORT).show();
+                tvError.setText("Please enter horse name");
+                return;
+            }
+
+            user.setHorseName(etHorseName.getText().toString());
+            Gameplay.getInstance().setUser(user);
+
+            Intent intent = new Intent(this, ActivityGameplay.class);
+            startActivity(intent);
         });
     }
 }

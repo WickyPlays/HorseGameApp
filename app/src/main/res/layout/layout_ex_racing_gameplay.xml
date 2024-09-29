@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/tv"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -9,10 +10,10 @@
         android:id="@+id/textView6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="48dp"
         android:text="Horse Racing"
         android:textAlignment="center"
-        android:textSize="34sp"
+        android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -64,22 +65,31 @@
         app:layout_constraintTop_toBottomOf="@+id/tvBankAmount" />
 
     <TextView
+        android:id="@+id/tvCommentary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lvTrack" />
+
+    <TextView
         android:id="@+id/tvStatus"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
-        android:text="Your horse has won the race"
-        android:textSize="20sp"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/lvTrack" />
+        app:layout_constraintTop_toBottomOf="@+id/tvCommentary" />
 
     <Button
         android:id="@+id/btnStart"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="84dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="24dp"
         android:backgroundTint="#0D8700"
         android:text="Start"
         android:textColor="#FFFFFF"
@@ -92,7 +102,7 @@
         android:id="@+id/btnReset"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="24dp"
         android:layout_marginEnd="84dp"
         android:text="Reset"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -102,8 +112,8 @@
 
     <ListView
         android:id="@+id/lvTrack"
-        android:layout_width="345dp"
-        android:layout_height="350dp"
+        android:layout_width="342dp"
+        android:layout_height="388dp"
         android:layout_marginTop="25dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

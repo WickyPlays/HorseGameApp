@@ -9,22 +9,22 @@ import android.widget.EditText;
 import androidx.appcompat.app.AppCompatActivity;
 
 import me.thienbao860.android.horsegameapp.Gameplay;
-import me.thienbao860.android.horsegameapp.GameplayUIManager;
+import me.thienbao860.android.horsegameapp.GameplayUI;
 import me.thienbao860.android.horsegameapp.R;
+import me.thienbao860.android.horsegameapp.obj.User;
 
 public class ActivityGameplay extends AppCompatActivity {
 
     private static ActivityGameplay instance;
-    private static GameplayUIManager uiManager = null;
+    private static GameplayUI gameplayUI;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         instance = this;
-        uiManager = new GameplayUIManager();
+        gameplayUI = new GameplayUI();
 
         setContentView(R.layout.layout_ex_racing_gameplay);
-        Gameplay.getInstance().setupTracks();
 
         Button btnStart = findViewById(R.id.btnStart);
         btnStart.setOnClickListener(v -> {
@@ -41,10 +41,15 @@ public class ActivityGameplay extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                User user = Gameplay.getInstance().getUser();
+                if (user == null) return;
+
                 try {
                     int amountBet = Integer.parseInt(charSequence.toString());
-                    Gameplay.getInstance().setBetAmount(amountBet);
+                    user.setBetAmount(amountBet);
                 } catch (Exception ignored) {}
+
+                gameplayUI.callToast(String.valueOf(user.getBetAmount()));
             }
 
             @Override
@@ -56,22 +61,28 @@ public class ActivityGameplay extends AppCompatActivity {
         etBetAmount.setOnFocusChangeListener((view, isFocused) -> {
             if (!isFocused) {
                 try {
-                    Gameplay.getInstance().setBetAmount(Integer.parseInt(etBetAmount.getText().toString()));
+                   User user = Gameplay.getInstance().getUser();
+                   if (user == null) return;
+
+                   int amountBet = Integer.parseInt(etBetAmount.getText().toString());
+                   user.setBetAmount(amountBet);
                 } catch (Exception ignored) {}
             }
         });
 
         Button btnReset = findViewById(R.id.btnReset);
         btnReset.setOnClickListener(v -> {
-            Gameplay.getInstance().reset();
+            Gameplay.getInstance().setupGameplay();
         });
+
+        Gameplay.getInstance().setupGameplay();
     }
 
     public static ActivityGameplay getContext() {
         return instance;
     }
 
-    public static GameplayUIManager getUIManager() {
-        return uiManager;
+    public static GameplayUI getUIManager() {
+        return gameplayUI;
     }
 }

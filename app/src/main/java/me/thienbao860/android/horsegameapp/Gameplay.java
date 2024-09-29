@@ -1,56 +1,62 @@
 package me.thienbao860.android.horsegameapp;
 
 import android.os.Handler;
-import android.widget.Button;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
-import me.thienbao860.android.horsegameapp.activities.ActivityGameplay;
 import me.thienbao860.android.horsegameapp.obj.Horse;
+import me.thienbao860.android.horsegameapp.obj.User;
 
 public class Gameplay {
 
-    private final int FIXED_PLAYERS = 5;
-    private static Gameplay instance = null;
+    private static final int FIXED_PLAYERS = 8;
+    private static volatile Gameplay instance = null;
     private final List<Horse> horseList = new ArrayList<>();
-    private int bankAmount = 100;
-    private int betAmount = 50;
-    private final GameplayUIManager uiManager;
     private GameplayStatus status = GameplayStatus.NOT_STARTED;
+    private List<Horse> wonHorses = new ArrayList<>();
+
+    private User currentUser = null;
     private Timer timer;
 
-    public Gameplay() {
+    public static Gameplay getInstance() {
+        if (instance == null) {
+            instance = new Gameplay();
+        }
+        return instance;
+    }
 
-        uiManager = ActivityGameplay.getUIManager();
+    // Method to set the current user
+    public void setUser(User user) {
+        this.currentUser = user;
+    }
 
-        setBankAmount(bankAmount);
-        setBetAmount(betAmount, true);
-
-        uiManager.callStatus("");
+    public User getUser() {
+        return currentUser;
     }
 
     public void startGameplay() {
         if (status == GameplayStatus.PLAYING) {
-            uiManager.callToast("The game has already begun");
+            getGameplayUI().callToast("Game is already in progress");
             return;
         }
 
-        status = GameplayStatus.WAITING;
-
-        boolean isStart = checkStartingCondition();
-        if (!isStart) {
-            status = GameplayStatus.NOT_STARTED;
+        if (!checkStartingCondition()) {
             return;
         }
 
         status = GameplayStatus.PLAYING;
+
+        getGameplayUI().enableResetButton(false);
+        getGameplayUI().enableStartButton(false);
+
+        //Assign your bet horse's name as your horse name
+        List<Horse> betHorses = getBetHorses();
+        Horse yourHorse = betHorses.get(0);
+        yourHorse.setName(currentUser.getHorseName());
 
         final Handler handler = new Handler();
         timer = new Timer();
@@ -63,15 +69,23 @@ public class Gameplay {
                         horse.setSpeed((float) (Math.random() * Utils.generateRandom(0.01, 0.05)));
                         horse.setProgress(horse.getProgress() + horse.getSpeed());
                     }
-                    uiManager.refreshTrack();
+                    getGameplayUI().refreshTrack();
 
-                    Horse wonHorse = getWonHorse();
-                    if (wonHorse == null) return;
+                    wonHorses = getWonHorses();
+                    if (wonHorses.isEmpty()) return;
 
                     timer.cancel();
-                    uiManager.callToast(wonHorse.getName() + " has won the race");
 
-                    if (wonHorse.isBet()) {
+                    if (wonHorses.size() == 1) {
+                        getGameplayUI().callCommentary(wonHorses.get(0).getName() + " has won the race");
+                    } else {
+                        String winners = wonHorses.stream()
+                                .map(Horse::getName)
+                                .collect(Collectors.joining(", "));
+                        getGameplayUI().callCommentary(winners + " won the race");
+                    }
+
+                    if (wonHorses.stream().anyMatch(Horse::isBet)) {
                         callWin();
                     } else {
                         callLose();
@@ -83,11 +97,16 @@ public class Gameplay {
         timer.schedule(timerTask, 0, 100);
     }
 
-    public void setupTracks() {
+    public void setupGameplay() {
         if (timer != null) {
             timer.cancel();
             timer = null;
         }
+
+        status = GameplayStatus.NOT_STARTED;
+
+        getGameplayUI().callStatus("");
+
         horseList.clear();
         for (int i = 0; i < FIXED_PLAYERS; i++) {
             Horse horse = new Horse("Horse " + (i + 1));
@@ -96,37 +115,53 @@ public class Gameplay {
             horseList.add(horse);
         }
 
-        uiManager.setTrack(horseList);
-        uiManager.refreshTrack();
+        getGameplayUI().setTrack(horseList);
+        getGameplayUI().refreshTrack();
+
+        if (currentUser != null) {
+            getGameplayUI().setBankAmount(currentUser.getBalance());
+            getGameplayUI().setBetAmount(0);
+        }
+    }
+
+    public void stopGameplay() {
+        getGameplayUI().enableResetButton(true);
+        getGameplayUI().enableStartButton(true);
     }
 
     public boolean checkStartingCondition() {
-
-        uiManager.callStatus("");
-
-        if (getBankAmount() < 0) {
-            uiManager.callToast("Negative balance, cannot bet.");
+        if (currentUser.getBalance() < 0) {
+            getGameplayUI().callCommentary("Negative balance, cannot bet");
+            getGameplayUI().callToast("Negative balance, cannot bet.");
             return false;
         }
 
-        if (getBankAmount() < getBetAmount()) {
-            uiManager.callToast("Not enough money to bet");
+        if (currentUser.getBalance() < currentUser.getBetAmount()) {
+            getGameplayUI().callCommentary("Not enough money to bet");
+            getGameplayUI().callToast("Not enough money to bet");
             return false;
         }
 
         List<Horse> betHorses = getBetHorses();
         if (betHorses.isEmpty()) {
-            uiManager.callToast("You must bet on a horse before the game begin");
+            getGameplayUI().callCommentary("You must bet on a horse before the game begins");
+            getGameplayUI().callToast("You must bet on a horse before the game begins");
             return false;
         }
 
         if (betHorses.size() > 1) {
-            uiManager.callToast(betHorses.size() + " horse(s) are selected. Only 1 is allowed");
+            getGameplayUI().callCommentary(betHorses.size() + " horse(s) are selected. Only 1 is allowed");
+            getGameplayUI().callToast(betHorses.size() + " horse(s) are selected. Only 1 is allowed");
             return false;
         }
 
-        uiManager.callToast("Let the game begin!");
+        if (currentUser.getBetAmount() == 0) {
+            getGameplayUI().callCommentary("Entering free play as you don't bet any money");
+        }
 
+        getGameplayUI().callToast("Let the game begin!");
+        getGameplayUI().callCommentary("");
+        status = GameplayStatus.WAITING;
         return true;
     }
 
@@ -134,60 +169,30 @@ public class Gameplay {
         return horseList;
     }
 
-    public int getBankAmount() {
-        return bankAmount;
-    }
-
-    public void setBankAmount(int bankAmount) {
-        this.bankAmount = bankAmount;
-        uiManager.setBankAmount(bankAmount);
-    }
-
-    public int getBetAmount() {
-        return betAmount;
-    }
-
-    public void setBetAmount(int amount) {
-        setBetAmount(betAmount, false);
-    }
-
-    public void setBetAmount(int amount, boolean uiChange) {
-        this.betAmount = amount;
-        if (uiChange) {
-            uiManager.setBetAmount(amount);
-        }
-    }
-
     public List<Horse> getBetHorses() {
         return horseList.stream().filter(Horse::isBet).collect(Collectors.toList());
     }
 
-    public Horse getWonHorse() {
-        return horseList.stream().filter(Horse::isWon).findFirst().orElse(null);
+    public List<Horse> getWonHorses() {
+        return horseList.stream().filter(Horse::isWon).collect(Collectors.toList());
     }
 
     public void callWin() {
-        uiManager.callWin("Your horse has won the race");
-        setBankAmount(getBankAmount() + getBetAmount());
+        getGameplayUI().callWin("Your horse (" + currentUser.getHorseName() + ") has won the race");
+        currentUser.setBalance(currentUser.getBalance() + currentUser.getBetAmount());
+        getGameplayUI().setBankAmount(currentUser.getBalance());
+        stopGameplay();
     }
 
     public void callLose() {
-        uiManager.callLose("Your horse has lost the race");
-        setBankAmount(getBankAmount() - getBetAmount());
+        getGameplayUI().callLose("Your horse (" + currentUser.getHorseName() + ") has lost the race");
+        currentUser.setBalance(currentUser.getBalance() - currentUser.getBetAmount());
+        getGameplayUI().setBankAmount(currentUser.getBalance());
+        stopGameplay();
     }
 
-    public void reset() {
-        status = GameplayStatus.NOT_STARTED;
-        timer = null;
-        uiManager.callStatus("");
-        setupTracks();
+    public GameplayUI getGameplayUI() {
+        return new GameplayUI();
     }
 
-    public static Gameplay getInstance() {
-        if (instance == null) {
-            instance = new Gameplay();
-        }
-
-        return instance;
-    }
 }

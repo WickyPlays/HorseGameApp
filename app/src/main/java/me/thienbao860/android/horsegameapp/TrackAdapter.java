@@ -59,6 +59,7 @@ public class TrackAdapter extends BaseAdapter {
 
             CheckBox cb = view.findViewById(R.id.cbBet);
             cb.setChecked(horse.isBet());
+            cb.setButtonTintList(csl);
 
             cb.setOnCheckedChangeListener((cbView, checked) -> {
                 horse.setBet(checked);
