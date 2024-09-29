@@ -48,8 +48,6 @@ public class ActivityGameplay extends AppCompatActivity {
                     int amountBet = Integer.parseInt(charSequence.toString());
                     user.setBetAmount(amountBet);
                 } catch (Exception ignored) {}
-
-                gameplayUI.callToast(String.valueOf(user.getBetAmount()));
             }
 
             @Override

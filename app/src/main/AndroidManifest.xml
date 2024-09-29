@@ -23,6 +23,7 @@
         </activity>
         <activity android:name=".activities.ActivityGameplay"></activity>
         <activity android:name=".activities.ActivityLogin"></activity>
+        <activity android:name=".activities.ActivityIntroduction"></activity>
     </application>
 
 </manifest>

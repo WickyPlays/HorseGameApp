@@ -157,10 +157,12 @@ public class Gameplay {
 
         if (currentUser.getBetAmount() == 0) {
             getGameplayUI().callCommentary("Entering free play as you don't bet any money");
+        } else {
+            getGameplayUI().callCommentary("");
         }
 
         getGameplayUI().callToast("Let the game begin!");
-        getGameplayUI().callCommentary("");
+
         status = GameplayStatus.WAITING;
         return true;
     }
