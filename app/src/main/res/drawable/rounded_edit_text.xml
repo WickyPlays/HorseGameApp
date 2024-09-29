@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- State when EditText is focused -->
+    <item android:state_focused="true">
+        <shape>
+            <solid android:color="#E0F7FA"/> <!-- Background color when focused -->
+            <corners android:radius="12dp"/> <!-- Border radius -->
+            <stroke android:width="2dp" android:color="#00BCD4"/> <!-- Border color when focused -->
+        </shape>
+    </item>
+
+    <!-- State when EditText is pressed -->
+    <item android:state_pressed="true">
+        <shape>
+            <solid android:color="#B2EBF2"/> <!-- Background color when pressed -->
+            <corners android:radius="12dp"/>
+            <stroke android:width="2dp" android:color="#0097A7"/> <!-- Border color when pressed -->
+        </shape>
+    </item>
+
+    <!-- Default state -->
+    <item>
+        <shape>
+            <solid android:color="#FFFFFF"/> <!-- Default background color -->
+            <corners android:radius="12dp"/> <!-- Border radius -->
+            <stroke android:width="2dp" android:color="#CCCCCC"/> <!-- Default border color -->
+        </shape>
+    </item>
+</selector>
