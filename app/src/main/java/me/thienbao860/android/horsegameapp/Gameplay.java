@@ -13,7 +13,7 @@ import me.thienbao860.android.horsegameapp.obj.User;
 
 public class Gameplay {
 
-    private static final int FIXED_PLAYERS = 8;
+    private static final int FIXED_PLAYERS = 7;
     private static volatile Gameplay instance = null;
     private final List<Horse> horseList = new ArrayList<>();
     private GameplayStatus status = GameplayStatus.NOT_STARTED;
