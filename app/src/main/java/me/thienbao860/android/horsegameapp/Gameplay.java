@@ -19,7 +19,7 @@ public class Gameplay {
     private GameplayStatus status = GameplayStatus.NOT_STARTED;
     private List<Horse> wonHorses = new ArrayList<>();
     private User currentUser = null;
-    private GameplayUI gameplayUI = new GameplayUI(); // Avoid creating a new instance
+    private GameplayUI gameplayUI = new GameplayUI();
 
     private Handler handler;
     private Runnable gameLoop;
@@ -75,7 +75,7 @@ public class Gameplay {
                         horse.setRank(currentRank.getAndIncrement());
                     }
 
-                    // Check if all horses have finished
+
                     if (horse.getProgress() < 1.0) {
                         allHorsesFinished = false;
                     }
@@ -101,12 +101,12 @@ public class Gameplay {
                         callLose();
                     }
                 } else {
-                    handler.postDelayed(this, 100); // Continue the loop every 100 ms
+                    handler.postDelayed(this, 50);
                 }
             }
         };
 
-        handler.post(gameLoop); // Start the loop
+        handler.post(gameLoop);
     }
 
     public void stopGameplay() {
@@ -214,7 +214,6 @@ public class Gameplay {
     }
 
     public GameplayUI getGameplayUI() {
-        return gameplayUI; // No longer creating a new instance
-    }
+        return gameplayUI; }
 
 }

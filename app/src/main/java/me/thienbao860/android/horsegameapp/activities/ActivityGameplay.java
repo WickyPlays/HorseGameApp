@@ -1,6 +1,8 @@
 package me.thienbao860.android.horsegameapp.activities;
 
 import android.content.Intent;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -81,7 +83,17 @@ public class ActivityGameplay extends AppCompatActivity {
             Intent intent = new Intent(this, ActivityLogin.class);
             startActivity(intent);
         });
-
+        String url = "https://download.samplelib.com/mp3/sample-15s.mp3";
+        MediaPlayer mediaPlayer = new MediaPlayer();
+        mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+        try {
+            mediaPlayer.setLooping(true);
+            mediaPlayer.setDataSource(url);
+            mediaPlayer.prepare();
+            mediaPlayer.start();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public static ActivityGameplay getContext() {
