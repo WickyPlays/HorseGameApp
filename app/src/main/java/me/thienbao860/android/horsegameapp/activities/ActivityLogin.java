@@ -62,5 +62,11 @@ public class ActivityLogin extends AppCompatActivity {
             Intent intent = new Intent(this, ActivityGameplay.class);
             startActivity(intent);
         });
+
+        Button btnBack = findViewById(R.id.btnBack);
+        btnBack.setOnClickListener((e) -> {
+            Intent intent = new Intent(this, ActivityHome.class);
+            startActivity(intent);
+        });
     }
 }

@@ -1,5 +1,6 @@
 package me.thienbao860.android.horsegameapp.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -74,6 +75,13 @@ public class ActivityGameplay extends AppCompatActivity {
         });
 
         Gameplay.getInstance().setupGameplay();
+
+        Button btnBack = findViewById(R.id.btnBack);
+        btnBack.setOnClickListener((e) -> {
+            Intent intent = new Intent(this, ActivityLogin.class);
+            startActivity(intent);
+        });
+
     }
 
     public static ActivityGameplay getContext() {

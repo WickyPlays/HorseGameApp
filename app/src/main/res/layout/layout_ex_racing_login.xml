@@ -9,8 +9,8 @@
 
     <ImageView
         android:id="@+id/imageTieude"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="317dp"
+        android:layout_height="166dp"
         android:layout_marginTop="24dp"
         android:alpha="0.8"
         android:contentDescription="Title"
@@ -24,19 +24,20 @@
         android:layout_width="0dp"
         android:layout_height="40dp"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="24dp"
         android:alpha="0.8"
         android:background="@drawable/rounded_edit_text"
         android:hint="Enter username"
-        android:textColorHint="#A9A9A9"
         android:inputType="text"
         android:paddingLeft="16dp"
         android:textColor="#000000"
+        android:textColorHint="#A9A9A9"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageTieude" />
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <EditText
         android:id="@+id/txtPassword"
@@ -48,10 +49,10 @@
         android:alpha="0.8"
         android:background="@drawable/rounded_edit_text"
         android:hint="Enter password"
-        android:textColorHint="#A9A9A9"
         android:inputType="textPassword"
         android:paddingLeft="16dp"
         android:textColor="#000000"
+        android:textColorHint="#A9A9A9"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -61,10 +62,23 @@
         android:id="@+id/tvHorseLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="34dp"
+        android:layout_marginTop="36dp"
         android:text="Enter horse name"
         android:textColor="#000000"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvHorseLabel2" />
+
+    <TextView
+        android:id="@+id/tvHorseLabel2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="No account? Sign up"
+        android:textColor="#2D0895"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtPassword" />
 
@@ -73,14 +87,14 @@
         android:layout_width="0dp"
         android:layout_height="40dp"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="12dp"
         android:layout_marginEnd="24dp"
         android:alpha="0.8"
         android:background="@drawable/rounded_edit_text"
         android:hint="Horse name"
-        android:textColorHint="#A9A9A9"
         android:paddingLeft="16dp"
         android:textColor="#000000"
+        android:textColorHint="#A9A9A9"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -92,7 +106,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="99dp"
-        android:textColor="#1B0064"
+        android:textColor="#0B0024"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etHorseName" />
@@ -102,14 +116,42 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="18dp"
         android:layout_marginEnd="24dp"
+        android:layout_marginBottom="120dp"
         android:backgroundTint="@color/black"
         android:text="Login"
         android:textColor="@android:color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Login"
+        android:textColor="#000000"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvError" />
+        app:layout_constraintTop_toBottomOf="@+id/imageTieude" />
+
+    <Button
+        android:id="@+id/btnBack"
+        android:layout_width="62dp"
+        android:layout_height="41dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:autoText="false"
+        android:gravity="center"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:scrollbarAlwaysDrawHorizontalTrack="false"
+        android:text="Back"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

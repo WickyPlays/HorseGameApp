@@ -2,7 +2,9 @@ package me.thienbao860.android.horsegameapp;
 
 import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.text.InputType;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -61,6 +63,11 @@ public class GameplayUI {
 
     public void callToast(String msg) {
         Toast.makeText(ActivityGameplay.getContext(), msg, Toast.LENGTH_SHORT).show();
+    }
+
+    public void enableEditBetAmount(boolean b) {
+        EditText etBetAmount = ActivityGameplay.getContext().findViewById(R.id.etBetAmount);
+        etBetAmount.setEnabled(b);
     }
 
     public void enableStartButton(boolean enable) {
