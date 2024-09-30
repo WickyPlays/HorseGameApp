@@ -51,6 +51,7 @@ public class Gameplay {
 
         status = GameplayStatus.PLAYING;
 
+        gameplayUI.enableBackButton(false);
         gameplayUI.enableEditBetAmount(false);
         gameplayUI.enableResetButton(false);
         gameplayUI.enableStartButton(false);
@@ -114,6 +115,7 @@ public class Gameplay {
             handler.removeCallbacks(gameLoop);
         }
 
+        gameplayUI.enableBackButton(true);
         gameplayUI.enableEditBetAmount(true);
         gameplayUI.enableResetButton(true);
         gameplayUI.enableStartButton(false);

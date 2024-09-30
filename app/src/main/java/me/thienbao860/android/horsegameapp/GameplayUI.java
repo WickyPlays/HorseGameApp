@@ -65,6 +65,11 @@ public class GameplayUI {
         Toast.makeText(ActivityGameplay.getContext(), msg, Toast.LENGTH_SHORT).show();
     }
 
+    public void enableBackButton(boolean b) {
+        Button view = ActivityGameplay.getContext().findViewById(R.id.btnBack);
+        view.setEnabled(b);
+    }
+
     public void enableEditBetAmount(boolean b) {
         EditText etBetAmount = ActivityGameplay.getContext().findViewById(R.id.etBetAmount);
         etBetAmount.setEnabled(b);
@@ -86,5 +91,14 @@ public class GameplayUI {
     public void enableResetButton(boolean enable) {
         Button view = ActivityGameplay.getContext().findViewById(R.id.btnReset);
         view.setEnabled(enable);
+
+        int originalColor = Color.parseColor("#7E00FF");
+        int disabledColor = Color.GRAY;
+
+        if (enable) {
+            view.setBackgroundTintList(ColorStateList.valueOf(originalColor));
+        } else {
+            view.setBackgroundTintList(ColorStateList.valueOf(disabledColor));
+        }
     }
 }
